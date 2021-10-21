@@ -4,17 +4,17 @@ class Counter {
     count = 0
 
     constructor () {
-        makeAutoObservable(this)
+        makeAutoObservable(this)    // сделать объекты этого класса автоматически отслеживаемыми
     }
 
-    decrement () {
+    decrement () {              // аналог action в редакс
         this.count = this.count -1
         console.log('decrement ', this.count)
     }
-    increment () {
+    increment () {              // аналог action в редакс
         this.count = this.count +1
         console.log('increment ', this.count)
     }
 }
 
-export default new Counter()
+export default new Counter()    // вернуть по умолчанию объект класса Counter
