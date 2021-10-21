@@ -1,11 +1,12 @@
 import React from 'react'
-import counter from './store/counter'
 import { observer } from 'mobx-react'
+import counter from './store/counter'
 
 // с помощью функции observe и функциональной компоненты компоненты
 const Counter = observer(() => {
     return (
             <div className="Counter">
+                {counter.total}
                 <h1>{counter.count}</h1>
                 <button onClick={() => { counter.decrement() }}>-1</button>
                 <button onClick={() => counter.increment()}>+1</button>

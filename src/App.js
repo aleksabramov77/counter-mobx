@@ -1,16 +1,15 @@
 import './App.css'
 import Counter from './Counter'
 import React from 'react'
-// import counter from './store/counter'
+import Todo from './Todo'
 
 
 
 function App () {
     return (
         <div className="App">
-            <Counter
-                // store={counter}
-            />
+            <Counter            />
+            <Todo />
         </div>
     )
 }
