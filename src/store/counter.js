@@ -9,15 +9,16 @@ class Counter {
     }
 
     decrement () {              // аналог action в редакс
-        this.count --
+        this.count--
         console.log('decrement ', this.count)
     }
+
     increment () {              // аналог action в редакс
-        this.count ++
+        this.count++
         console.log('increment ', this.count)
     }
 
-    get total() {
+    get total () {
         return `Count + Timer = ` + this.count + this.timer
     }
 }

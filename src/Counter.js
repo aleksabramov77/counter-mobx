@@ -2,9 +2,9 @@ import React from 'react'
 import { observer } from 'mobx-react'
 import counter from './store/counter'
 
-// с помощью функции observe и функциональной компоненты компоненты
+// с помощью функции observe и функциональной компоненты
 const Counter = observer(() => {
-    return (
+        return (
             <div className="Counter">
                 {counter.total}
                 <h1>{counter.count}</h1>

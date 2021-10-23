@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, runInAction } from 'mobx'
 
 class Todo {
     todos = [
@@ -7,32 +7,40 @@ class Todo {
         { id: 3, title: 'Сходить на улицу', completed: false },
     ]
 
+    get nextId () {
+        return this.todos.reduce((prev, current) => +prev.id > +current.id ? prev : current).id + 1
+    }
+
     constructor () {
         makeAutoObservable(this)    // сделать объекты этого класса автоматически отслеживаемыми
     }
 
+    // This method will be wrapped into `action` automatically by `makeAutoObservable`
     addTodo (todo) {              // аналог action в редакс
-        this.todos.push(todo)
+        console.log('addTodo ', todo, this.nextId)
+        this.todos.push({
+            ...todo,
+            id: this.nextId
+        })
     }
 
     removeTodo (id) {              // аналог action в редакс
         this.todos = this.todos.filter(todo => todo.id !== id)
     }
 
+    // This method will be wrapped into `action` automatically by `makeAutoObservable`
     completeTodo (todo) {
         todo.completed = !todo.completed
     }
-    // completeTodo (id) {
-    //     this.todos = this.todos.map(t => t.id === id ? { ...t, completed: !t.completed } : t )
-    // }
 
     fetchTodo () {
-        let  nextId = this.todos.reduce((prev, current) => +prev.id > +current.id ? prev : current).id + 1
-        fetch(`https://jsonplaceholder.typicode.com/todos/` + nextId)
+        fetch(`https://jsonplaceholder.typicode.com/todos/` + this.nextId)
             .then(response => response.json())
             .then(json => {
-                console.log(json)
-                this.todos.push({ id:json.id, title: json.title, completed: json.completed })
+                // since my fetchTodo function is async then I need to use runInAction inside
+                runInAction(() => {
+                    this.todos.push({ id: json.id, title: json.title, completed: json.completed })
+                })
             })
     }
 }
